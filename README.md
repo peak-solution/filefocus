@@ -1,6 +1,6 @@
 # PeakTDM FileFocus
 
-<img src="filefocus_en_2.png" alt="Motto image." height="250" />
+<img src="docs/images/filefocus_en_2.png" alt="Motto image." height="250" />
 
 **The Fastest Way to Turn Test & Measurement Files Into AI‑Ready Data**
 
@@ -12,13 +12,12 @@ The guide helps you get started with _PeakTDM FileFocus_.
 
 ### Requirements
 
-_PeakTDM FileFocus_ is delivered as a Docker container and requires a working docker runtime. 
-On Windows install Docker Desktop[^1].
+_PeakTDM FileFocus_ is delivered as a Docker container and requires a working Docker runtime. 
+On Windows, install Docker Desktop[^1].
 
 Log in to the Peak Solution Docker Image Repository[^2]:
 
 ``` bash
-.Log in to Peak Solution Docker Image Repository
 docker login https://docker.peak-solution.de
 ```
 
@@ -28,15 +27,15 @@ docker login https://docker.peak-solution.de
 
 Clone or [download](https://github.com/peak-solution/filefocus/archive/refs/heads/main.zip) this repository. 
 If downloaded as a ZIP, extract the archive to a local folder.
-Open a terminal and navigate to the extracted repository folder.
-Then execute:
+
+Open a terminal(cmd) and navigate to the repository folder.
+Then pull the required images:
 ``` bash
-.Pull required images
 docker compose pull
 ```
+And start the FileFocus environment:
 
 ``` bash
-.Start FileFocus environment
 docker compose up -d
 ```
 
@@ -52,7 +51,7 @@ Open:
 
 👉 [http://localhost:15000](http://localhost:15000)
 
-<img src="FileFocus_Web_UI.png" alt="FileFocus WebUI" height="250" />
+<img src="docs/images/FileFocus_Web_UI.png" alt="FileFocus WebUI" height="250" />
 
 You can now:
 
@@ -60,12 +59,12 @@ You can now:
 
 * Use **Jupyter Notebooks** for programmatic access via Python
 
-To start  _PeakTDM FileFocus_ with some **example files**:
+Start _PeakTDM FileFocus_ with some **example files**:
 
 ```bash
-docker-compose --profile examples up -d
+docker compose --profile examples up -d
 ```
-Or add your own data files to the `./datafolder` in your installation directory.
+or add your own data files to the `./datafolder` in your installation directory.
 
 ### Python API
 
@@ -75,27 +74,30 @@ Access your data programmatically via Python using [Peak ASAM ODSBox](https://pe
 
 ### Configure _PeakTDM FileFocus_
 
-Rename the `.env_template` file to `.env` and open it in a text editor. Adapt the configuration settings according to your needs. Set the +LOCAL_DATA_PATH+ variable to the absolute path of your data files to index your specific file location. Restart the PeakTDM FileFocus environment by executing the following command in your installation folder:
+Copy the `.env.example` file to `.env`, open it in a text editor and adjust the values according to your setup.
+
+Set the `DATAFOLDER` variable to the absolute path of your data files to index your specific file location. To apply the configuration settings, **restart** the PeakTDM FileFocus environment by executing the following commands:
 ``` bash
-.Tear down FileFocus environment
 docker compose down -v
 ```
-
+and then
 ``` bash
-.Start FileFocus environment
 docker compose up -d
 ```
+⚠️ Note: Docker on Windows cannot use UNC paths directly - you need to use the cifs driver for network shares. See `.env.example` file for examples.
+
+
 ### Import Your Own Data Files ###
 
-_PeakTDM FileFocus_ can deal with almostany measurement file format. In case your file format is not supported yet, you can develop your own **ExD data plugin**.
+_PeakTDM FileFocus_ can deal with almost any measurement file format. In case your file format is not supported yet, you can develop your own **ExD data plugin**.
 
-👉 Visit the [Data Management Learning Path](https://peak-solution.github.io/data_management_learning_path/exd_api/overview.html) for instaructions and examples or [contact Peak Solution](https://www.peak-solution.de/contact.html).
+👉 Visit the [Data Management Learning Path](https://peak-solution.github.io/data_management_learning_path/exd_api/overview.html) for instructions and examples or [contact Peak Solution](https://www.peak-solution.de/contact.html).
 
 ## Licensing
 
 Running _PeakTDM FileFocus_ requires a valid license issued by Peak Solution. 
 
-Copy your license file in the `.\license` folder of your installation.
+Copy your license file into the `.\license` folder of your installation.
 
 Need an **evaluation license**:
 
@@ -113,7 +115,7 @@ we are actively exploring the use of PeakTDM data with **agentic AI frameworks**
 
 For questions about _PeakTDM FileFocus_ or other Peak Solution products feel free to 
 
-👉 [Reach out Peak Solution](https://www.peak-solution.de/contact.html) 
+👉 [Reach out to Peak Solution](https://www.peak-solution.de/contact.html) 
 
 
 ## Footnotes
@@ -121,4 +123,4 @@ For questions about _PeakTDM FileFocus_ or other Peak Solution products feel fre
 [^1]: You can find the Docker Desktop installation instructions on the official Docker web site: [Get Docker Documentation](https://docs.docker.com/get-docker/)
 
 
-[^2]: You need  login credentials for the Peak Solution Docker Image Repository. In case you don't have them, please [contact Peak Solution](https://www.peak-solution.de/contact.html)
+[^2]: You need login credentials for the Peak Solution Docker Image Repository. In case you don't have them, please [contact Peak Solution](https://www.peak-solution.de/contact.html)
