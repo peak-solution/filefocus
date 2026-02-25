@@ -28,12 +28,7 @@ docker login https://docker.peak-solution.de
 Clone or [download](https://github.com/peak-solution/filefocus/archive/refs/heads/main.zip) this repository. 
 If downloaded as a ZIP, extract the archive to a local folder.
 
-Open a terminal(cmd) and navigate to the repository folder.
-Then pull the required images:
-``` bash
-docker compose pull
-```
-And start the FileFocus environment:
+Open a terminal(cmd) and navigate to the repository folder and start the FileFocus environment:
 
 ``` bash
 docker compose up -d
@@ -59,18 +54,13 @@ You can now:
 
 * Use **Jupyter Notebooks** for programmatic access via Python
 
-Start _PeakTDM FileFocus_ with some **example files**:
+Add some **example files**:
 
 ```bash
-docker compose --profile examples up -d
+docker compose --profile examples up example-data
+docker compose --profile examples down example-data
 ```
-or add your own data files to the `./datafolder` in your installation directory.
-
-### Python API
-
-Access your data programmatically via Python using [Peak ASAM ODSBox](https://peak-solution.github.io/odsbox/) - a thin wrapper around the _PeakTDM FileFocus_ HTTP(S)-APIs.
-
-👉 Find more Python examples in the [Data Management Learning Path](https://peak-solution.github.io/data_management_learning_path/.) 
+or copy your own data files to the `./datafolder` in your installation directory.
 
 ### Configure _PeakTDM FileFocus_
 
@@ -86,12 +76,18 @@ docker compose up -d
 ```
 ⚠️ Note: Docker on Windows cannot use UNC paths directly - you need to use the cifs driver for network shares. See `.env.example` file for examples.
 
-
 ### Import Your Own Data Files ###
 
 _PeakTDM FileFocus_ can deal with almost any measurement file format. In case your file format is not supported yet, you can develop your own **ExD data plugin**.
 
 👉 Visit the [Data Management Learning Path](https://peak-solution.github.io/data_management_learning_path/exd_api/overview.html) for instructions and examples or [contact Peak Solution](https://www.peak-solution.de/contact.html).
+
+### Python API
+
+Access your data programmatically via Python using [Peak ASAM ODSBox](https://peak-solution.github.io/odsbox/) - a thin wrapper around the _PeakTDM FileFocus_ HTTP(S)-APIs.
+
+👉 Find more Python examples in the [Data Management Learning Path](https://peak-solution.github.io/data_management_learning_path/.) 
+
 
 ## Licensing
 

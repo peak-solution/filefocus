@@ -259,7 +259,7 @@ volumes:
   datafolder:
     driver: local
     driver_opts:
-      o: bind
-      type: none
+      o: "${DATAFOLDER_OPTS:-bind}"
+      type: "${DATAFOLDER_TYPE:-none}"
       device: "${DATAFOLDER:-./datafolder}"
   
