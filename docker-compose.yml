@@ -1,0 +1,265 @@
+name: peak-file-focus
+services:
+  postgres:
+    restart: always
+    image: docker.peak-solution.de/peak/poff/postgres:0.1.0-alpha
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "openmdm"]
+      interval: 120s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    volumes:
+      - filefocus-pgdata:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=openmdm
+      - POSTGRES_USER=openmdm
+      - POSTGRES_DB=openmdm
+    expose:
+      - 5432
+  elasticsearch:
+    restart: always
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.16.3
+    healthcheck:
+      test: ["CMD", "curl", "-f", "-s", "http://localhost:9200"]
+      interval: 120s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    expose:
+      - 9200
+      - 9300
+    environment:
+      - discovery.type=single-node
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+  ptdw:
+    restart: always
+    image: docker.peak-solution.de/peak/poff/ptdw:0.1.0-alpha
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080"]
+      interval: 120s
+      timeout: 10s
+      retries: 3
+      start_period: 300s
+    ports:
+      - 15000:8080
+    depends_on:
+      postgres:
+        condition: service_healthy
+      pods:
+        condition: service_started
+      elasticsearch:
+        condition: service_healthy
+  pods:
+    restart: always
+    image: docker.peak-solution.de/peak/poff/pods:0.1.0-alpha
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/api/health"]
+      interval: 120s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    ports:
+      - 15003:8080
+    volumes:
+      - ${LICENSE_PATH:-./license}:/license
+      - datafolder:/datafolder:ro
+      - filefocus-podsdata:/var/lib/peakodsserver/data
+    environment:
+      ####################################
+      # EXD-API plugins
+      - PODS_EXD_PLG_PEAK_GRPC_URI=dns:///ods-exd-api-peak:50051
+      - PODS_EXD_PLG_PEAK_GRPC_USEPLAINTEXT=true
+      - PODS_EXD_PLG_PEAK_EXTENSIONS=*.peak
+      - PODS_EXD_PLG_CSV_GRPC_URI=dns:///ods-exd-api-csv:50051
+      - PODS_EXD_PLG_CSV_GRPC_USEPLAINTEXT=true
+      - PODS_EXD_PLG_CSV_EXTENSIONS=*.csv
+      - PODS_EXD_PLG_MDF4_GRPC_URI=dns:///ods-exd-api-mdf4:50051
+      - PODS_EXD_PLG_MDF4_GRPC_USEPLAINTEXT=true
+      - PODS_EXD_PLG_MDF4_EXTENSIONS=*.mf4
+      - PODS_EXD_PLG_TDMS_GRPC_URI=dns:///ods-exd-api-nptdms:50051
+      - PODS_EXD_PLG_TDMS_GRPC_USEPLAINTEXT=true
+      - PODS_EXD_PLG_TDMS_EXTENSIONS=*.tdms
+      - PODS_EXD_PLG_PARQUET_GRPC_URI=dns:///ods-exd-api-parquet:50051
+      - PODS_EXD_PLG_PARQUET_GRPC_USEPLAINTEXT=true
+      - PODS_EXD_PLG_PARQUET_EXTENSIONS=*.parquet
+      - PODS_EXD_PLG_DEWESOFT_GRPC_URI=dns:///ods-exd-api-dewesoft:50051
+      - PODS_EXD_PLG_DEWESOFT_GRPC_USEPLAINTEXT=true
+      - PODS_EXD_PLG_DEWESOFT_EXTENSIONS=*.d7d;*.dxd
+      - PODS_EXD_PLG_EXCEL_GRPC_URI=dns:///ods-exd-api-excel:50051
+      - PODS_EXD_PLG_EXCEL_GRPC_USEPLAINTEXT=true
+      - PODS_EXD_PLG_EXCEL_EXTENSIONS=*.xlsx
+      - PODS_EXD_PLG_EXCEL_IMPORT_BULK_MODE=EXTERNAL_COMPONENT
+      - PODS_EXD_PLG_IMC_GRPC_URI=dns:///ods-exd-api-imc:50051
+      - PODS_EXD_PLG_IMC_GRPC_USEPLAINTEXT=true
+      - PODS_EXD_PLG_IMC_EXTENSIONS=*.dat;*.raw
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  jupyter:
+    restart: always
+    image: docker.peak-solution.de/peak/poff/jupyter:0.1.0-alpha
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8888/api"]
+      interval: 120s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    ports:
+      - 15001:8888
+    volumes:
+      - datafolder:/datafolder:ro
+    environment:
+      - NB_GID=1000
+      - NB_GROUP=users
+      - JUPYTER_TOKEN=${JUPYTER_TOKEN:-filefocus}
+      - CHOWN_HOME=no
+
+  airflow:
+    restart: always
+    image: docker.peak-solution.de/peak/poff/airflow:0.1.0-alpha
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 120s
+      timeout: 10s
+      retries: 3
+      start_period: 300s
+    environment:
+      - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://openmdm:openmdm@postgres/openmdm?options=-csearch_path%3Dairflow
+      - AIRFLOW__CORE__EXECUTOR=LocalExecutor
+      - AIRFLOW__CORE__PARALLELISM=8
+      - AIRFLOW__CORE__MAX_ACTIVE_RUNS_PER_DAG=4
+      - AIRFLOW__CORE__TEST_CONNECTION=Enabled
+      - AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION=False
+      - AIRFLOW__WEBSERVER__INSTANCE_NAME=Peak Solution - File Focus
+    ports:
+      - 15002:8080
+    volumes:
+      - datafolder:/datafolder:ro
+      - filefocus-logging:/app/airflow/logs
+      - filefocus-mirror:/datafolder.mirror
+      #- ./airflow/dags:/app/airflow/dags
+    depends_on:
+      #########################
+      # stores airflow meta and config
+      postgres:
+        condition: service_healthy
+      #########################
+      # needed for import
+      pods:
+        condition: service_healthy
+      elasticsearch:
+        condition: service_healthy
+      ods-exd-api-peak:
+        condition: service_started
+      ods-exd-api-csv:
+        condition: service_started
+      ods-exd-api-mdf4:
+        condition: service_started
+      ods-exd-api-nptdms:
+        condition: service_started
+      ods-exd-api-parquet:
+        condition: service_started
+      ods-exd-api-dewesoft:
+        condition: service_started
+      ods-exd-api-excel:
+        condition: service_started
+      ods-exd-api-imc:
+        condition: service_started
+      #########################
+      # used to inspect
+      jupyter:
+        condition: service_started
+
+  ods-exd-api-peak:
+    restart: always
+    image: docker.peak-solution.de/peak/poff/asam-ods-exd-api-peak:0.1.0-alpha
+    expose:
+      - 50051
+    volumes:
+      - datafolder:/datafolder:ro
+
+  ods-exd-api-csv:
+    restart: always
+    image: ghcr.io/totonga/asam-ods-exd-api-pandascsv:latest
+    expose:
+      - 50051
+    volumes:
+      - datafolder:/datafolder:ro
+
+  ods-exd-api-mdf4:
+    restart: always
+    image: ghcr.io/peak-solution/asam-ods-exd-api-mdf4:latest
+    expose:
+      - 50051
+    volumes:
+      - datafolder:/datafolder:ro
+
+  ods-exd-api-nptdms:
+    restart: always
+    image: ghcr.io/totonga/asam-ods-exd-api-nptdms:latest
+    expose:
+      - 50051
+    volumes:
+      - datafolder:/datafolder:ro
+
+  ods-exd-api-parquet:
+    restart: always
+    image: ghcr.io/totonga/asam-ods-exd-api-parquet:latest
+    expose:
+      - 50051
+    volumes:
+      - datafolder:/datafolder:ro
+
+  ods-exd-api-dewesoft:
+    restart: always
+    image: ghcr.io/peak-solution/asam-ods-exd-api-dewesoft:latest
+    expose:
+      - 50051
+    volumes:
+      - datafolder:/datafolder:ro
+
+  ods-exd-api-excel:
+    restart: always
+    image: ghcr.io/peak-solution/asam-ods-exd-api-xlsx:latest
+    expose:
+      - 50051
+    volumes:
+      - datafolder:/datafolder:ro
+
+  ods-exd-api-imc:
+    restart: always
+    image: ghcr.io/totonga/asam-ods-exd-api-imc-termite:latest
+    expose:
+      - 50051
+    volumes:
+      - datafolder:/datafolder:ro
+
+  example-data:
+    image: docker.peak-solution.de/peak/poff/example-data:0.1.0-alpha
+    profiles: ["examples"]
+    volumes:
+      - datafolder:/datafolder:ro
+
+volumes:
+  #####################################
+  ## FileFocus persistent volumes
+  # persistent volume for Postgres database
+  filefocus-pgdata:
+  # persistent volume for crawler
+  filefocus-mirror:
+  # persistent logging folder for airflow logs
+  filefocus-logging:
+  # persistent volume for imported data
+  filefocus-podsdata:
+  #####################################
+
+  # folder to be indexed by FileFocus
+  datafolder:
+    driver: local
+    driver_opts:
+      o: "${DATAFOLDER_OPTS:-bind}"
+      type: "${DATAFOLDER_TYPE:-none}"
+      device: "${DATAFOLDER:-./datafolder}"
+  
