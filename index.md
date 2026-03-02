@@ -1,8 +1,5 @@
-# PeakTDM FileFocus
 
-<img src="docs/images/filefocus_en_2.png" alt="Motto image." height="250" />
-
-**The Fastest Way to Turn Test & Measurement Files Into AI‑Ready Data**
+## PeakTDM FileFocus - The Fastest Way to Turn Test & Measurement Files Into AI‑Ready Data
 
 Peak Test Data Manager (PeakTDM) **FileFocus** is the fastest way to transform your scattered test and measurement files into a unified, searchable, AI-ready data platform - *without disrupting your existing toolchains*.
 
@@ -27,8 +24,6 @@ The *PeakTDM FileFocus* Web UI consists of the following components:
 ## Licensing
 
 Running *PeakTDM FileFocus* requires a valid license issued by Peak Solution.
-
-Copy your license file into the `.\license` folder of your installation.
 
 Need an **evaluation license**:
 
