@@ -26,6 +26,9 @@ docker login https://docker.peak-solution.de
 ### Install and Start *PeakTDM FileFocus*
 
 Clone or [download](https://github.com/peak-solution/filefocus/archive/refs/heads/main.zip) this repository.
+
+⚠️ **Note: By downloading or installing the Software, you acknowledge that you have read and understood the [End User License Agreement](Eula_FileFocus_Discovery_Package.pdf) and agree to be bound by its terms.**
+
 If downloaded as a ZIP, extract the archive to a local folder.
 
 Open a terminal(cmd) and navigate to the repository folder and start the FileFocus environment:
