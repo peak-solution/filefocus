@@ -46,7 +46,9 @@ and then
 docker compose up -d
 ```
 
-⚠️ Note: Docker on Windows cannot use UNC paths directly - you need to use the cifs driver for network shares. See `.env.example` file for examples.
+⚠️ Note: Docker on Windows cannot use UNC paths directly - you need to use the cifs driver for network shares. 
+
+Find more details in the [basic configuration](docs/envconfig.md).
 
 ### Import Your Own Data Files
 

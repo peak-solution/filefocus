@@ -11,7 +11,7 @@ The *PeakTDM FileFocus* Web UI consists of the following components:
 
 🟧 [PeakTDM Test Data Workplace](docs/workplace.md) to find and inspect your data
 
-🟦 [Jupyter Notebooks](docs/notebooks.md) for programmatic data access and analysis via Python
+🟦 [Jupyter Notebooks](docs/notebooks.md) for data access and analysis using Python
 
 ## Configure *PeakTDM FileFocus*
 
@@ -19,7 +19,7 @@ The *PeakTDM FileFocus* Web UI consists of the following components:
 
 ## Installation and Requirements
 
-To install *PeakTDM FileFocus* follow the instructions in the [QuickStart guide](docs/quickstart.md).
+[QuickStart guide](docs/quickstart.md) with *PeakTDM FileFocus* installation instructions.
 
 [Uninstall *PeakTDM FileFocus*](docs/uninstall.md)
 
