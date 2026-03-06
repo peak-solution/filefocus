@@ -1,8 +1,8 @@
-## Data Ingestion
+## 🟩 Import and Enrich
 
 **PeakTDM FileFocus** uses [Apache Airflow](https://airflow.apache.org/docs/apache-airflow/2.11.1/index.html) and [ExD API-Plugins](https://peak-solution.github.io/data_management_learning_path/exd_api/overview.html) for data ingestion.
 
-## Apache Airflow
+### Apache Airflow
 
 Apache Airflow® is an open-source platform for developing, scheduling, and monitoring batch-oriented workflows. 
 
@@ -16,7 +16,7 @@ Apache Airflow® is an open-source platform for developing, scheduling, and moni
 | FileFocus Remove Import         | Remove no longer existing files from the data index |
 | Check unknown units             | Create default engineering units |
 
-## ExD DataPlugins
+### ExD DataPlugins
 
 ExD API-Plugins are used to extract descriptive data (meta data) and channel data (bulk data) from a measurement file. The following ExD API-Plugins are installed by default:
 

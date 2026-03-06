@@ -7,11 +7,17 @@ The guide helps you get started with *PeakTDM FileFocus*.
 Clone or [download](https://github.com/peak-solution/filefocus/archive/refs/heads/main.zip) this repository.
 If downloaded as a ZIP, extract the archive to a local folder.
 
-Open a terminal(cmd) and navigate to the repository folder and start the FileFocus environment:
+Open a terminal (cmd) and navigate to the repository folder and start the *PeakTDM FileFocus* environment:
 
 ``` bash
 docker compose up -d
 ```
+
+If you want to use *PeakTDM FileFocus* **with example files** use the following command instead 
+```bash
+docker compose --profile examples up -d
+```
+or copy your own data files to the `./datafolder` in your installation directory.
 
 Your *PeakTDM FileFocus* instance is now up and running.
 
@@ -23,23 +29,12 @@ Copy the following URL into your browser to access the *PeakTDM FileFocus* Web U
 
 👉 http://localhost:15000
 
-
-### Adding Example Files
-
-Example files are in an own container and can be installed using the following commmand
-
-```bash
-docker compose --profile examples up example-data
-docker compose --profile examples down example-data
-```
-
-or copy your own data files to the `./datafolder` in your installation directory.
-
 ### Specify your Index Location
 
-Copy the `.env.example` file to `.env`, open it in a text editor and adjust the values according to your setup.
+You can define a different index location on your computer or in your network. 
+To do so, copy the `.env.example` file to `.env`, open it in a text editor.
 
-Set the `DATAFOLDER` variable to the absolute path of your data files to index your specific file location. To apply the configuration settings, **restart** the *PeakTDM FileFocus* environment by executing the following commands:
+Set the `DATAFOLDER` variable to the absolute path of your data files. To apply the configuration settings, **restart** the *PeakTDM FileFocus* environment by executing the following commands:
 
 ``` bash
 docker compose down -v

@@ -1,25 +1,27 @@
 
 ## PeakTDM FileFocus - The Fastest Way to Turn Test & Measurement Files Into AI‑Ready Data
 
-Peak Test Data Manager (PeakTDM) **FileFocus** is the fastest way to transform your scattered test and measurement files into a unified, searchable, AI-ready data platform - *without disrupting your existing toolchains*.
-
-## Installation and Requirements
-
-To install *PeakTDM FileFocus* follow the instructions in the [QuickStart guide](docs/quickstart.md).
+Peak Test Data Manager (PeakTDM) **FileFocus** is the fastest way to transform your scattered test and measurement files into a unified, searchable, AI-ready data platform - without disrupting your existing toolchains.
 
 ## Components
 
 The *PeakTDM FileFocus* Web UI consists of the following components:
 
-* [PeakTDM Test Data Workplace](docs/workplace.md) for interactive data exploration
+🟩 [Apache Airflow and ExD DataPlugins](docs/dataingest.md) for data import and enrichment
 
-* [Jupyter Notebooks](docs/notebooks.md) for programmatic access via Python
+🟧 [PeakTDM Test Data Workplace](docs/workplace.md) to find and inspect your data
 
-* [Apache Airflow and ExD DataPlugins](docs/dataingest.md) for data ingestion
+🟦 [Jupyter Notebooks](docs/notebooks.md) for programmatic data access and analysis via Python
 
 ## Configure *PeakTDM FileFocus*
 
-[Basic configuration](docs/envconfig.md) is applied using an `.env`
+[Basic configuration](docs/envconfig.md) is applied using an `.env` file
+
+## Installation and Requirements
+
+To install *PeakTDM FileFocus* follow the instructions in the [QuickStart guide](docs/quickstart.md).
+
+[Uninstall *PeakTDM FileFocus*](docs/uninstall.md)
 
 ## Licensing
 
