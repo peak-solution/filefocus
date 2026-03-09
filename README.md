@@ -31,11 +31,19 @@ Clone or [download](https://github.com/peak-solution/filefocus/archive/refs/head
 
 If downloaded as a ZIP, extract the archive to a local folder.
 
-Open a terminal(cmd) and navigate to the repository folder and start the FileFocus environment:
+Open a terminal (cmd) and navigate to the repository folder and start the FileFocus environment:
 
 ``` bash
 docker compose up -d
 ```
+
+If you want to use *PeakTDM FileFocus* **with example files** use the following command instead 
+
+```bash
+docker compose --profile examples up -d
+```
+
+or copy your own data files to the `./datafolder` in your installation directory.
 
 Your *PeakTDM FileFocus* instance is now up and running.
 
@@ -51,20 +59,13 @@ Copy the following URL into your browser to access the *PeakTDM FileFocus* Web U
 
 <img src="docs/images/FileFocus_Web_UI.png" alt="FileFocus WebUI" height="250" />
 
-You can now:
+You can now use the following components:
 
-* Use **PeakTDM Test Data Workplace** for interactive data exploration
+🟩 **Apache Airflow and ExD DataPlugins** for data import and enrichment
 
-* Use **Jupyter Notebooks** for programmatic access via Python
+🟧 **PeakTDM Test Data Workplace** to find and inspect your data
 
-Add some **example files**:
-
-```bash
-docker compose --profile examples up example-data
-docker compose --profile examples down example-data
-```
-
-or copy your own data files to the `./datafolder` in your installation directory.
+🟦 **Jupyter Notebooks** for data access and analysis using Python
 
 ### Configure *PeakTDM FileFocus*
 
