@@ -26,13 +26,16 @@ docker login https://docker.peak-solution.de
 As a single-server installation we recommend the following system requirements: **8 CPU cores**, **32 GB RAM** - for the Docker Desktop virtualization environment we recommend using WSL 2[^1]. 
 
 
-### Install and Start *PeakTDM FileFocus*
+### Install *PeakTDM FileFocus*
 
 Clone or [download](https://github.com/peak-solution/filefocus/archive/refs/heads/main.zip) this repository.
 
 ⚠️ **Note: By downloading or installing the Software, you acknowledge that you have read and understood the [End User License Agreement](Eula_FileFocus_Discovery_Package.pdf) and agree to be bound by its terms.**
 
 If downloaded as a ZIP, extract the archive to a local folder.
+Copy your license file into the `.\license` folder of your installation, see [Licensing](#licensing).
+
+### Start *PeakTDM FileFocus*
 
 Open a terminal (cmd) and navigate to the repository folder and start the FileFocus environment:
 
@@ -103,9 +106,6 @@ Access your data programmatically via Python using [Peak ASAM ODSBox](https://pe
 ## Licensing
 
 Running *PeakTDM FileFocus* requires a valid license issued by Peak Solution.
-
-Copy your license file into the `.\license` folder of your installation.
-
 Need an **evaluation license**:
 
 👉 [Contact Peak Solution](https://www.peak-solution.de/contact.html).
