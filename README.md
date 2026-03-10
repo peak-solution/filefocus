@@ -23,6 +23,9 @@ docker login https://docker.peak-solution.de
 
 ℹ️ If Docker containers cannot be used in your organization, please [contact Peak Solution](https://www.peak-solution.de/contact.html) for alternatives.
 
+As a single-server installation we recommend the following system requirements: **8 CPU cores**, **32 GB RAM** - for the Docker Desktop virtualization environment we recommend using WSL 2[^1]. 
+
+
 ### Install and Start *PeakTDM FileFocus*
 
 Clone or [download](https://github.com/peak-solution/filefocus/archive/refs/heads/main.zip) this repository.
@@ -126,6 +129,6 @@ Explore the *PeakTDM FileFocus* website for more information:
 
 ## Footnotes
 
-[^1]: You can find the Docker Desktop installation instructions on the official Docker web site: [Get Docker Documentation](https://docs.docker.com/get-docker/)
+[^1]: You can find the Docker Desktop installation instructions on the official Docker web site: [Get Docker Documentation](https://docs.docker.com/get-docker/) See also the  [requirements for WSL](https://docs.docker.com/desktop/setup/install/windows-install/) which also includes the Docker Desktop licensing conditions.
 
 [^2]: You need login credentials for the Peak Solution Docker Image Repository. In case you don't have them, please [contact Peak Solution](https://www.peak-solution.de/contact.html)
