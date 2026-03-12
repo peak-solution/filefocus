@@ -2,7 +2,7 @@ name: peak-file-focus
 services:
   postgres:
     restart: always
-    image: docker.peak-solution.de/peak/poff/postgres:0.1.0-alpha
+    image: docker.peak-solution.de/peak/filefocus/postgres:1.0.0
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "openmdm"]
       interval: 120s
@@ -34,7 +34,7 @@ services:
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
   ptdw:
     restart: always
-    image: docker.peak-solution.de/peak/poff/ptdw:0.1.0-alpha
+    image: docker.peak-solution.de/peak/filefocus/ptdw:1.0.0
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080"]
       interval: 120s
@@ -52,7 +52,7 @@ services:
         condition: service_healthy
   pods:
     restart: always
-    image: docker.peak-solution.de/peak/poff/pods:0.1.0-alpha
+    image: docker.peak-solution.de/peak/filefocus/pods:1.0.0
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080/api/health"]
       interval: 120s
@@ -99,7 +99,7 @@ services:
 
   jupyter:
     restart: always
-    image: docker.peak-solution.de/peak/poff/jupyter:0.1.0-alpha
+    image: docker.peak-solution.de/peak/filefocus/jupyter:1.0.0
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8888/api"]
       interval: 120s
@@ -118,7 +118,7 @@ services:
 
   airflow:
     restart: always
-    image: docker.peak-solution.de/peak/poff/airflow:0.1.0-alpha
+    image: docker.peak-solution.de/peak/filefocus/airflow:1.0.0
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
       interval: 120s
@@ -174,7 +174,7 @@ services:
 
   ods-exd-api-peak:
     restart: always
-    image: docker.peak-solution.de/peak/poff/asam-ods-exd-api-peak:0.1.0-alpha
+    image: docker.peak-solution.de/peak/filefocus/asam-ods-exd-api-peak:1.0.0
     expose:
       - 50051
     volumes:
@@ -182,7 +182,7 @@ services:
 
   ods-exd-api-csv:
     restart: always
-    image: ghcr.io/totonga/asam-ods-exd-api-pandascsv:latest
+    image: ghcr.io/totonga/asam-ods-exd-api-pandascsv:0.6.1
     expose:
       - 50051
     volumes:
@@ -190,7 +190,7 @@ services:
 
   ods-exd-api-mdf4:
     restart: always
-    image: ghcr.io/peak-solution/asam-ods-exd-api-mdf4:latest
+    image: ghcr.io/peak-solution/asam-ods-exd-api-mdf4:0.1.0
     expose:
       - 50051
     volumes:
@@ -198,7 +198,7 @@ services:
 
   ods-exd-api-nptdms:
     restart: always
-    image: ghcr.io/totonga/asam-ods-exd-api-nptdms:latest
+    image: ghcr.io/totonga/asam-ods-exd-api-nptdms:1.0.2
     expose:
       - 50051
     volumes:
@@ -206,7 +206,7 @@ services:
 
   ods-exd-api-parquet:
     restart: always
-    image: ghcr.io/totonga/asam-ods-exd-api-parquet:latest
+    image: ghcr.io/totonga/asam-ods-exd-api-parquet:0.9.3
     expose:
       - 50051
     volumes:
@@ -214,7 +214,7 @@ services:
 
   ods-exd-api-dewesoft:
     restart: always
-    image: ghcr.io/peak-solution/asam-ods-exd-api-dewesoft:latest
+    image: ghcr.io/peak-solution/asam-ods-exd-api-dewesoft:0.1.0
     expose:
       - 50051
     volumes:
@@ -222,7 +222,7 @@ services:
 
   ods-exd-api-excel:
     restart: always
-    image: ghcr.io/peak-solution/asam-ods-exd-api-xlsx:latest
+    image: ghcr.io/peak-solution/asam-ods-exd-api-xlsx:0.1.4
     expose:
       - 50051
     volumes:
@@ -230,14 +230,14 @@ services:
 
   ods-exd-api-imc:
     restart: always
-    image: ghcr.io/totonga/asam-ods-exd-api-imc-termite:latest
+    image: ghcr.io/totonga/asam-ods-exd-api-imc-termite:0.2.1
     expose:
       - 50051
     volumes:
       - datafolder:/datafolder:ro
 
   example-data:
-    image: docker.peak-solution.de/peak/poff/example-data:0.1.0-alpha
+    image: docker.peak-solution.de/peak/filefocus/example-data:1.0.0
     profiles: ["examples"]
     volumes:
       - datafolder:/datafolder:ro
