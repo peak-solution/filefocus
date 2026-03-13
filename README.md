@@ -28,7 +28,7 @@ As a single-server installation we recommend the following system requirements: 
 
 ### Install *PeakTDM FileFocus*
 
-Clone or [download](https://github.com/peak-solution/filefocus/archive/refs/heads/main.zip) this repository.
+Clone or [download](https://github.com/peak-solution/filefocus/archive/refs/tags/v1.0.0.zip) this repository.
 
 ⚠️ **Note: By downloading or installing the Software, you acknowledge that you have read and understood the [End User License Agreement](Eula_FileFocus_Discovery_Package.pdf) and agree to be bound by its terms.**
 
