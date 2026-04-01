@@ -7,6 +7,12 @@
 			"args": [
 				"odsbox-jaquel-mcp@latest"
 			],
+			
+			"env": {
+				"ODSBOX_MCP_URL": "http://localhost:15003/api",
+				"ODSBOX_MCP_USER": "user",
+				"ODSBOX_MCP_PASSWORD": "welcome"
+			}
 		}
 	}
 }
