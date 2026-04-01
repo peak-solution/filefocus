@@ -1,0 +1,12 @@
+{
+	"inputs": [],
+	"servers": {
+		"ODSBox-AIConnect": {
+			"type": "stdio",
+			"command": "uvx",
+			"args": [
+				"odsbox-jaquel-mcp@latest"
+			],
+		}
+	}
+}
