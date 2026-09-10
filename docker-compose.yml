@@ -19,7 +19,7 @@ services:
       - 5432
   elasticsearch:
     restart: always
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.16.3
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.17.24
     healthcheck:
       test: ["CMD", "curl", "-f", "-s", "http://localhost:9200"]
       interval: 120s
@@ -186,7 +186,7 @@ services:
 
   ods-exd-api-csv:
     restart: always
-    image: ghcr.io/totonga/asam-ods-exd-api-pandascsv:0.6.1
+    image: ghcr.io/totonga/asam-ods-exd-api-pandascsv:latest
     expose:
       - 50051
     volumes:
@@ -194,7 +194,7 @@ services:
 
   ods-exd-api-mdf4:
     restart: always
-    image: ghcr.io/peak-solution/asam-ods-exd-api-mdf4:0.1.0
+    image: ghcr.io/peak-solution/asam-ods-exd-api-mdf4:latest
     expose:
       - 50051
     volumes:
@@ -202,7 +202,7 @@ services:
 
   ods-exd-api-nptdms:
     restart: always
-    image: ghcr.io/totonga/asam-ods-exd-api-nptdms:1.0.2
+    image: ghcr.io/totonga/asam-ods-exd-api-nptdms:latest
     expose:
       - 50051
     volumes:
@@ -210,7 +210,7 @@ services:
 
   ods-exd-api-parquet:
     restart: always
-    image: ghcr.io/totonga/asam-ods-exd-api-parquet:0.9.3
+    image: ghcr.io/totonga/asam-ods-exd-api-parquet:latest
     expose:
       - 50051
     volumes:
@@ -218,7 +218,7 @@ services:
 
   ods-exd-api-dewesoft:
     restart: always
-    image: ghcr.io/peak-solution/asam-ods-exd-api-dewesoft:0.1.0
+    image: ghcr.io/peak-solution/asam-ods-exd-api-dewesoft:latest
     expose:
       - 50051
     volumes:
@@ -226,7 +226,7 @@ services:
 
   ods-exd-api-excel:
     restart: always
-    image: ghcr.io/peak-solution/asam-ods-exd-api-xlsx:0.1.4
+    image: ghcr.io/peak-solution/asam-ods-exd-api-xlsx:latest
     expose:
       - 50051
     volumes:
@@ -234,7 +234,7 @@ services:
 
   ods-exd-api-imc:
     restart: always
-    image: ghcr.io/totonga/asam-ods-exd-api-imc-termite:0.2.1
+    image: ghcr.io/totonga/asam-ods-exd-api-imc-termite:latest
     expose:
       - 50051
     volumes:
