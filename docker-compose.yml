@@ -72,9 +72,6 @@ services:
     environment:
       ####################################
       # EXD-API plugins
-      - PODS_EXD_PLG_PEAK_GRPC_URI=dns:///ods-exd-api-peak:50051
-      - PODS_EXD_PLG_PEAK_GRPC_USEPLAINTEXT=true
-      - PODS_EXD_PLG_PEAK_EXTENSIONS=*.peak
       - PODS_EXD_PLG_CSV_GRPC_URI=dns:///ods-exd-api-csv:50051
       - PODS_EXD_PLG_CSV_GRPC_USEPLAINTEXT=true
       - PODS_EXD_PLG_CSV_EXTENSIONS=*.csv
@@ -87,16 +84,13 @@ services:
       - PODS_EXD_PLG_PARQUET_GRPC_URI=dns:///ods-exd-api-parquet:50051
       - PODS_EXD_PLG_PARQUET_GRPC_USEPLAINTEXT=true
       - PODS_EXD_PLG_PARQUET_EXTENSIONS=*.parquet
-      - PODS_EXD_PLG_DEWESOFT_GRPC_URI=dns:///ods-exd-api-dewesoft:50051
-      - PODS_EXD_PLG_DEWESOFT_GRPC_USEPLAINTEXT=true
-      - PODS_EXD_PLG_DEWESOFT_EXTENSIONS=*.d7d;*.dxd
       - PODS_EXD_PLG_EXCEL_GRPC_URI=dns:///ods-exd-api-excel:50051
       - PODS_EXD_PLG_EXCEL_GRPC_USEPLAINTEXT=true
       - PODS_EXD_PLG_EXCEL_EXTENSIONS=*.xlsx
       - PODS_EXD_PLG_EXCEL_IMPORT_BULK_MODE=EXTERNAL_COMPONENT
-      - PODS_EXD_PLG_IMC_GRPC_URI=dns:///ods-exd-api-imc:50051
-      - PODS_EXD_PLG_IMC_GRPC_USEPLAINTEXT=true
-      - PODS_EXD_PLG_IMC_EXTENSIONS=*.dat;*.raw
+      - PODS_EXD_PLG_CUSTOM__CSV_GRPC_URI=dns:///ods-exd-api-custom-csv:50051
+      - PODS_EXD_PLG_CUSTOM__CSV_GRPC_USEPLAINTEXT=true
+      - PODS_EXD_PLG_CUSTOM__CSV_EXTENSIONS=*.dat
     depends_on:
       postgres:
         condition: service_healthy
@@ -155,9 +149,9 @@ services:
         condition: service_healthy
       elasticsearch:
         condition: service_healthy
-      ods-exd-api-peak:
-        condition: service_started
       ods-exd-api-csv:
+        condition: service_started
+      ods-exd-api-custom-csv:
         condition: service_started
       ods-exd-api-mdf4:
         condition: service_started
@@ -165,24 +159,12 @@ services:
         condition: service_started
       ods-exd-api-parquet:
         condition: service_started
-      ods-exd-api-dewesoft:
-        condition: service_started
       ods-exd-api-excel:
-        condition: service_started
-      ods-exd-api-imc:
         condition: service_started
       #########################
       # used to inspect
       jupyter:
         condition: service_started
-
-  ods-exd-api-peak:
-    restart: always
-    image: docker.peak-solution.de/peak/filefocus/asam-ods-exd-api-peak:1.0.0
-    expose:
-      - 50051
-    volumes:
-      - datafolder:/datafolder:ro
 
   ods-exd-api-csv:
     restart: always
@@ -191,6 +173,15 @@ services:
       - 50051
     volumes:
       - datafolder:/datafolder:ro
+
+  ods-exd-api-custom-csv:
+    restart: always
+    image: ghcr.io/totonga/asam-ods-exd-api-pandascsv:latest
+    expose:
+      - 50051
+    volumes:
+      - datafolder:/datafolder:ro
+      - ./custom_csv/external_file_data.py:/app/external_file_data.py:ro
 
   ods-exd-api-mdf4:
     restart: always
@@ -216,25 +207,9 @@ services:
     volumes:
       - datafolder:/datafolder:ro
 
-  ods-exd-api-dewesoft:
-    restart: always
-    image: ghcr.io/peak-solution/asam-ods-exd-api-dewesoft:latest
-    expose:
-      - 50051
-    volumes:
-      - datafolder:/datafolder:ro
-
   ods-exd-api-excel:
     restart: always
     image: ghcr.io/peak-solution/asam-ods-exd-api-xlsx:latest
-    expose:
-      - 50051
-    volumes:
-      - datafolder:/datafolder:ro
-
-  ods-exd-api-imc:
-    restart: always
-    image: ghcr.io/totonga/asam-ods-exd-api-imc-termite:latest
     expose:
       - 50051
     volumes:
