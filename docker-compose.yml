@@ -2,13 +2,7 @@ name: peak-file-focus
 services:
   postgres:
     restart: always
-    image: docker.peak-solution.de/peak/filefocus/postgres:1.0.0
-    healthcheck:
-      test: ["CMD", "pg_isready", "-U", "openmdm"]
-      interval: 120s
-      timeout: 10s
-      retries: 3
-      start_period: 60s
+    image: docker.peak-solution.de/peak/filefocus/postgres:1.1.0
     volumes:
       - filefocus-pgdata:/var/lib/postgresql/data
     environment:
@@ -19,7 +13,7 @@ services:
       - 5432
   elasticsearch:
     restart: always
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.17.24
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.17.29
     healthcheck:
       test: ["CMD", "curl", "-f", "-s", "http://localhost:9200"]
       interval: 120s
@@ -34,7 +28,7 @@ services:
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
   ptdw:
     restart: always
-    image: docker.peak-solution.de/peak/filefocus/ptdw:1.0.0
+    image: docker.peak-solution.de/peak/filefocus/ptdw:1.1.0
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080"]
       interval: 120s
@@ -56,13 +50,7 @@ services:
         condition: service_healthy
   pods:
     restart: always
-    image: docker.peak-solution.de/peak/filefocus/pods:1.0.0
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/api/health"]
-      interval: 120s
-      timeout: 10s
-      retries: 3
-      start_period: 60s
+    image: docker.peak-solution.de/peak/filefocus/pods:1.1.0
     ports:
       - 15003:8080
     volumes:
@@ -103,7 +91,7 @@ services:
 
   jupyter:
     restart: always
-    image: docker.peak-solution.de/peak/filefocus/jupyter:1.0.0
+    image: docker.peak-solution.de/peak/filefocus/jupyter:1.1.0
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8888/api"]
       interval: 120s
@@ -122,7 +110,7 @@ services:
 
   airflow:
     restart: always
-    image: docker.peak-solution.de/peak/filefocus/airflow:1.0.0
+    image: docker.peak-solution.de/peak/filefocus/airflow:1.1.0
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
       interval: 120s
@@ -178,7 +166,7 @@ services:
 
   ods-exd-api-peak:
     restart: always
-    image: docker.peak-solution.de/peak/filefocus/asam-ods-exd-api-peak:1.0.0
+    image: docker.peak-solution.de/peak/filefocus/asam-ods-exd-api-peak:1.1.0
     expose:
       - 50051
     volumes:
@@ -241,7 +229,7 @@ services:
       - datafolder:/datafolder:ro
 
   example-data:
-    image: docker.peak-solution.de/peak/filefocus/example-data:1.0.0
+    image: docker.peak-solution.de/peak/filefocus/example-data:1.1.0
     profiles: ["examples"]
     volumes:
       - datafolder:/datafolder:ro
